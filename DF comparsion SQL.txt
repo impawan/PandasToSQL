@@ -1,0 +1,41 @@
+
+--select 10 record only
+select * from death where ROWNUM < = 10;
+
+
+deaths.head(10)
+
+
+--select killer name, killed_by(weapon) and vicitim_name
+select killer_name,killed_by,victim_name from death;
+
+deaths[['killer_name','killed_by','victim_name']]
+
+
+
+--select death records from the map MIRAMAR
+select * from death where map = 'MIRAMAR';
+
+deaths[deaths['map']=='MIRAMAR']
+
+
+
+--combining more two condition 
+--select all the rows where map is ERANGEL and vicitm is killed by SCAR-L
+
+select * from death where map = 'ERANGEL' and killed_by = 'SCAR-L';
+
+
+deaths[(deaths['map']=='MIRAMAR') & (deaths['killed_by']=='SCAR-L')]
+
+
+--select the killed by each weapons in the map MIRAMAR
+select killed_by,count(*) as cnt from death where map = 'MIRAMAR' group by killed_by order by cnt desc;
+
+--select the killed by each weapons in the map ERANGEL
+select killed_by,count(*) as cnt from death where map = 'ERANGEL' group by killed_by order by cnt desc;
+
+in Pandas Dataframe :-
+
+killed_in_miramar_by = deaths[deaths['map']=='MIRAMAR'].groupby('killed_by').size().sort_values(ascending=False)
+killed_in_erangel_by = deaths[deaths['map']=='ERANGEL'].groupby('killed_by').size().sort_values(ascending=False)
